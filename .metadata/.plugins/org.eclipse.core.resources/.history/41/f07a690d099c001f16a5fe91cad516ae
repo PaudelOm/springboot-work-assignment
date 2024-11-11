@@ -1,0 +1,26 @@
+package com.omsarma.crud.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.omsarma.crud.entity.Books;
+import com.omsarma.crud.service.BookService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/")
+public class BookController {
+
+    @Autowired
+    private BookService service;
+
+    @GetMapping("/books")
+    public List<Books> getAllBooks() {
+        return service.listAll();
+    }
+
+    @PostMapping("/books")
+    public Books createBook(@RequestBody Books book) {
+        return service.saveBook(book);
+    }
+}

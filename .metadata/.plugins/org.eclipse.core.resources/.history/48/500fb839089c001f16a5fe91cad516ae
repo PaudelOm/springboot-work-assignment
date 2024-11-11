@@ -1,0 +1,63 @@
+package com.omsarma.crud.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.omsarma.crud.entity.Books;
+import com.omsarma.crud.repo.BookRepository;
+import com.omsarma.crud.service.BookService;
+
+
+@RestController
+@RequestMapping("/")
+public class BookController {
+	@Autowired
+	private BookService service;
+	
+	/*
+	 * @PostMapping public Books createBook(@RequestBody Books book) { return
+	 * bookRepository.save(book); }
+	 */
+	
+	@GetMapping("/books")
+	public List<Books> getAllBooks() {
+	return service.listAll();
+	} 
+	
+	/*
+	 * @GetMapping("/{id}") public ResponseEntity<Books> getBookById(@PathVariable
+	 * Long id) throws Exception { Books book =
+	 * bookRepository.findById(id).orElseThrow(() -> new
+	 * ResourceNotFoundException("Book not found")); return ResponseEntity.ok(book);
+	 * }
+	 */
+	
+//	@PutMapping("/{id}")
+//	public ResponseEntity<Books> updateBook(@PathVariable Long id, @RequestBody Books bookDetails) {
+//	Books book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+//	book.setTitle(bookDetails.getTitle());
+//	book.setAuthor(bookDetails.getAuthor());
+//	book.setPublishedYear(bookDetails.getPublishedYear());
+//	book.setGenre(bookDetails.getGenre());return ResponseEntity.ok(bookRepository.save(book));
+//	} 
+	/*
+	 * @DeleteMapping("/{id}") public ResponseEntity<Map<String, Boolean>>
+	 * deleteBook(@PathVariable Long id) throws Exception { Books book =
+	 * bookRepository.findById(id) .orElseThrow(() -> new
+	 * ResourceNotFoundException("Book not found")); bookRepository.delete(book);
+	 * Map<String, Boolean> response = new HashMap<>(); response.put("deleted",
+	 * Boolean.TRUE); return ResponseEntity.ok(response); }
+	 */
+}

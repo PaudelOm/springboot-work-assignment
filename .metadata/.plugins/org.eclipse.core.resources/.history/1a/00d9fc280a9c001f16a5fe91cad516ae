@@ -1,0 +1,25 @@
+package com.omsarma.crud.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.omsarma.crud.entity.Books;
+import com.omsarma.crud.repo.BookRepository;
+
+@Service
+public class BookService   {
+	
+	@Autowired
+	private BookRepository repo;
+	
+	public List<Books> listAll(){
+		return (List<Books>) repo.findAll();
+	}
+
+	 public Books saveBook(Books book) {
+	        return repo.save(book);
+	    }
+
+}

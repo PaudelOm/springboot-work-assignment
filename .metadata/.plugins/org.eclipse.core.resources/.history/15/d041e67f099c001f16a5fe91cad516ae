@@ -1,0 +1,104 @@
+package com.omsarma.crud.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Books {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String author;
+    private Integer publishedYear;
+    private String genre;
+
+    // Default constructor
+    public Books() {
+    }
+
+    // Parameterized constructor
+    public Books(String title, String author, Integer publishedYear, String genre) {
+        this.title = title;
+        this.author = author;
+        this.publishedYear = publishedYear;
+        this.genre = genre;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Integer getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(Integer publishedYear) {
+        this.publishedYear = publishedYear;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    // toString method for debugging or logging
+    @Override
+    public String toString() {
+        return "Books{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publishedYear=" + publishedYear +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
+
+    // hashCode and equals methods for entity comparison
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Books books = (Books) o;
+
+        return id != null ? id.equals(books.id) : books.id == null;
+    }
+}
