@@ -1,5 +1,6 @@
 package com.omsarma.crud.service;
 
+import com.omsarma.crud.controller.ItemAlreadyExistsException;
 import com.omsarma.crud.entity.BookDTO;
 import com.omsarma.crud.entity.Books;
 import com.omsarma.crud.repo.BookRepository;
@@ -35,11 +36,16 @@ public class BookService {
 
     public ServerResponse saveBook(BookDTO bookDto) {
         try{
+            Optional<Books> existingBook = bookRepo.findByTitle(bookDto.getTitle());
+            if(existingBook.isPresent()){
+                throw new ItemAlreadyExistsException("The book with given title already exists");
+            }
             Books savedBook = bookRepo.save(convertDTOtoBook(bookDto));
 
             return ServerResponse.setSuccessMsg("Book Saved Successfully", HttpStatus.CREATED, convertToDTO(savedBook));
-        }
-         catch(Exception e){
+        }catch(ItemAlreadyExistsException ex){
+            return ServerResponse.setFailMsg(ex.getMessage(), HttpStatus.CONFLICT);
+        }catch(Exception e){
             return ServerResponse.setFailMsg("Book Saved Failed", HttpStatus.INTERNAL_SERVER_ERROR);
          }
     }
@@ -54,8 +60,7 @@ public class BookService {
             else
                 for (Books book : booksList) {
                     responseDTOs.add(convertToDTO(book));
-                }
-                return ServerResponse.setSuccessMsg("Books retrived Sucessfully", HttpStatus.OK, responseDTOs);
+                }return ServerResponse.setSuccessMsg("Books retrived Sucessfully", HttpStatus.OK, responseDTOs);
         } catch (Exception e){
             return ServerResponse.setFailMsg("Books retrival failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
